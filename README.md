@@ -103,12 +103,13 @@ This app shares the latest information on artists with users and could be used t
 
 ## Wireframes
 [Add picture of your hand sketched wireframes in this section]
-<img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
+<img src="https://github.com/csheung/Music_Soul_iOS_App/blob/main/Wireframes/wireframes.png" width=600>
 
 ### [BONUS] Digital Wireframes & Mockups
-<img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
+same as above
 
 ### [BONUS] Interactive Prototype
+<img src="https://github.com/csheung/Music_Soul_iOS_App/blob/main/Wireframes/InteractivePrototype.gif" width=600>
 
 ## Schema 
 [This section will be completed in Unit 9]
