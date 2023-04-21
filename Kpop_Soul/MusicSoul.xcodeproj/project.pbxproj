@@ -32,6 +32,9 @@
 		6CE5F7E929E522EA00F87952 /* AudioTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE5F7E829E522EA00F87952 /* AudioTrack.swift */; };
 		6CE5F7EB29E5231400F87952 /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE5F7EA29E5231400F87952 /* Artist.swift */; };
 		6CE5F7ED29E5232A00F87952 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE5F7EC29E5232A00F87952 /* UserProfile.swift */; };
+		78AF7F5029ECC54700AB0AB1 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AF7F4F29ECC54700AB0AB1 /* Review.swift */; };
+		78B6DA0F29EF89990030750E /* ArtistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B6DA0E29EF89990030750E /* ArtistCell.swift */; };
+		78B6DA1229EF8CB30030750E /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = 78B6DA1129EF8CB30030750E /* Nuke */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +65,8 @@
 		6CE5F7E829E522EA00F87952 /* AudioTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioTrack.swift; sourceTree = "<group>"; };
 		6CE5F7EA29E5231400F87952 /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
 		6CE5F7EC29E5232A00F87952 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		78AF7F4F29ECC54700AB0AB1 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
+		78B6DA0E29EF89990030750E /* ArtistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78B6DA1229EF8CB30030750E /* Nuke in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,6 +137,7 @@
 				6CE5F7EA29E5231400F87952 /* Artist.swift */,
 				6CE5F7EC29E5232A00F87952 /* UserProfile.swift */,
 				6C03C6B929EBB69600C6F71C /* AuthResponse.swift */,
+				78AF7F4F29ECC54700AB0AB1 /* Review.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -170,6 +177,7 @@
 				6CE5F79429E5030500F87952 /* HomeViewController.swift */,
 				6CE5F7CC29E507CE00F87952 /* SearchViewController.swift */,
 				6CE5F7CE29E507EC00F87952 /* LibraryViewController.swift */,
+				78B6DA0E29EF89990030750E /* ArtistCell.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -204,6 +212,9 @@
 			dependencies = (
 			);
 			name = Spotify;
+			packageProductDependencies = (
+				78B6DA1129EF8CB30030750E /* Nuke */,
+			);
 			productName = Spotify;
 			productReference = 6CE5F78D29E5030500F87952 /* MusicSoul.app */;
 			productType = "com.apple.product-type.application";
@@ -232,6 +243,9 @@
 				Base,
 			);
 			mainGroup = 6CE5F78429E5030500F87952;
+			packageReferences = (
+				78B6DA1029EF8CB30030750E /* XCRemoteSwiftPackageReference "Nuke" */,
+			);
 			productRefGroup = 6CE5F78E29E5030500F87952 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -261,11 +275,13 @@
 			files = (
 				6CE5F7CD29E507CE00F87952 /* SearchViewController.swift in Sources */,
 				6CE5F7E729E522B100F87952 /* Playlist.swift in Sources */,
+				78B6DA0F29EF89990030750E /* ArtistCell.swift in Sources */,
 				6CE5F7E129E508E600F87952 /* AuthManager.swift in Sources */,
 				6CE5F7DF29E508C400F87952 /* SearchResultsViewController.swift in Sources */,
 				6CE5F7D529E5084700F87952 /* WelcomeViewController.swift in Sources */,
 				6CE5F7D929E5087400F87952 /* ProfileViewController.swift in Sources */,
 				6CE5F7CB29E5079800F87952 /* TabBarViewController.swift in Sources */,
+				78AF7F5029ECC54700AB0AB1 /* Review.swift in Sources */,
 				6CE5F7E529E520BC00F87952 /* HapticsManager.swift in Sources */,
 				6C03C6BA29EBB69600C6F71C /* AuthResponse.swift in Sources */,
 				6CE5F7E929E522EA00F87952 /* AudioTrack.swift in Sources */,
@@ -490,6 +506,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		78B6DA1029EF8CB30030750E /* XCRemoteSwiftPackageReference "Nuke" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/Nuke.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		78B6DA1129EF8CB30030750E /* Nuke */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 78B6DA1029EF8CB30030750E /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = Nuke;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6CE5F78529E5030500F87952 /* Project object */;
 }
