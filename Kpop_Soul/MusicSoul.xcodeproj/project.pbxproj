@@ -31,7 +31,9 @@
 		6CE5F7E729E522B100F87952 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE5F7E629E522B100F87952 /* Playlist.swift */; };
 		6CE5F7E929E522EA00F87952 /* AudioTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE5F7E829E522EA00F87952 /* AudioTrack.swift */; };
 		6CE5F7EB29E5231400F87952 /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE5F7EA29E5231400F87952 /* Artist.swift */; };
-		6CE5F7ED29E5232A00F87952 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE5F7EC29E5232A00F87952 /* UserProfile.swift */; };
+		6CE86D9C29F622460044A572 /* NewReleasesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE86D9B29F622460044A572 /* NewReleasesResponse.swift */; };
+		6CE86D9E29F624B10044A572 /* APIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE86D9D29F624B10044A572 /* APIImage.swift */; };
+		6CE86DA029F6589C0044A572 /* FeaturedPlaylistResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE86D9F29F6589C0044A572 /* FeaturedPlaylistResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,7 +63,9 @@
 		6CE5F7E629E522B100F87952 /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		6CE5F7E829E522EA00F87952 /* AudioTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioTrack.swift; sourceTree = "<group>"; };
 		6CE5F7EA29E5231400F87952 /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
-		6CE5F7EC29E5232A00F87952 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		6CE86D9B29F622460044A572 /* NewReleasesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReleasesResponse.swift; sourceTree = "<group>"; };
+		6CE86D9D29F624B10044A572 /* APIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIImage.swift; sourceTree = "<group>"; };
+		6CE86D9F29F6589C0044A572 /* FeaturedPlaylistResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedPlaylistResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,8 +133,10 @@
 				6CE5F7E629E522B100F87952 /* Playlist.swift */,
 				6CE5F7E829E522EA00F87952 /* AudioTrack.swift */,
 				6CE5F7EA29E5231400F87952 /* Artist.swift */,
-				6CE5F7EC29E5232A00F87952 /* UserProfile.swift */,
 				6C03C6B929EBB69600C6F71C /* AuthResponse.swift */,
+				6CE86D9B29F622460044A572 /* NewReleasesResponse.swift */,
+				6CE86D9D29F624B10044A572 /* APIImage.swift */,
+				6CE86D9F29F6589C0044A572 /* FeaturedPlaylistResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -260,6 +266,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				6CE5F7CD29E507CE00F87952 /* SearchViewController.swift in Sources */,
+				6CE86D9E29F624B10044A572 /* APIImage.swift in Sources */,
+				6CE86DA029F6589C0044A572 /* FeaturedPlaylistResponse.swift in Sources */,
 				6CE5F7E729E522B100F87952 /* Playlist.swift in Sources */,
 				6CE5F7E129E508E600F87952 /* AuthManager.swift in Sources */,
 				6CE5F7DF29E508C400F87952 /* SearchResultsViewController.swift in Sources */,
@@ -272,7 +280,6 @@
 				6CE5F79529E5030500F87952 /* HomeViewController.swift in Sources */,
 				6CE5F7D329E5083900F87952 /* AuthViewController.swift in Sources */,
 				6CE5F79129E5030500F87952 /* AppDelegate.swift in Sources */,
-				6CE5F7ED29E5232A00F87952 /* UserProfile.swift in Sources */,
 				6C4C098D29E54CAB0027B4E9 /* Extensions.swift in Sources */,
 				6CE5F7CF29E507EC00F87952 /* LibraryViewController.swift in Sources */,
 				6CE5F7EB29E5231400F87952 /* Artist.swift in Sources */,
@@ -280,6 +287,7 @@
 				6CE5F79329E5030500F87952 /* SceneDelegate.swift in Sources */,
 				6CE5F7DB29E5088900F87952 /* PlayerViewController.swift in Sources */,
 				6CE5F7E329E508FB00F87952 /* APICaller.swift in Sources */,
+				6CE86D9C29F622460044A572 /* NewReleasesResponse.swift in Sources */,
 				6CE5F7D729E5085E00F87952 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
