@@ -8,9 +8,6 @@
 import Foundation
 
 
-/*
- xinyue
- */
 
 final class APICaller {
     static let shared = APICaller()

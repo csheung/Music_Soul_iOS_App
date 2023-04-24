@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		6C03C6BA29EBB69600C6F71C /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C03C6B929EBB69600C6F71C /* AuthResponse.swift */; };
 		6C4C098D29E54CAB0027B4E9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4C098C29E54CAB0027B4E9 /* Extensions.swift */; };
+		6C905D1E29F6A263003E71E9 /* NewReleaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C905D1D29F6A263003E71E9 /* NewReleaseCollectionViewCell.swift */; };
+		6C905D2029F6A520003E71E9 /* FeaturedPlaylistCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C905D1F29F6A520003E71E9 /* FeaturedPlaylistCollectionViewCell.swift */; };
 		6CD8E12B29E55FC900A0A0E8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CD8E12A29E55FC900A0A0E8 /* Main.storyboard */; };
 		6CE5F79129E5030500F87952 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE5F79029E5030500F87952 /* AppDelegate.swift */; };
 		6CE5F79329E5030500F87952 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE5F79229E5030500F87952 /* SceneDelegate.swift */; };
@@ -39,8 +41,10 @@
 /* Begin PBXFileReference section */
 		6C03C6B929EBB69600C6F71C /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
 		6C4C098C29E54CAB0027B4E9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		6C905D1D29F6A263003E71E9 /* NewReleaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReleaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		6C905D1F29F6A520003E71E9 /* FeaturedPlaylistCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedPlaylistCollectionViewCell.swift; sourceTree = "<group>"; };
 		6CD8E12A29E55FC900A0A0E8 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		6CE5F78D29E5030500F87952 /* MusicSoul.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicSoul.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6CE5F78D29E5030500F87952 /* KpopSoul.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KpopSoul.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CE5F79029E5030500F87952 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6CE5F79229E5030500F87952 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		6CE5F79429E5030500F87952 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -79,6 +83,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6C905D1C29F6A1FE003E71E9 /* Browse */ = {
+			isa = PBXGroup;
+			children = (
+				6C905D1D29F6A263003E71E9 /* NewReleaseCollectionViewCell.swift */,
+				6C905D1F29F6A520003E71E9 /* FeaturedPlaylistCollectionViewCell.swift */,
+			);
+			path = Browse;
+			sourceTree = "<group>";
+		};
 		6CE5F78429E5030500F87952 = {
 			isa = PBXGroup;
 			children = (
@@ -90,7 +103,7 @@
 		6CE5F78E29E5030500F87952 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6CE5F78D29E5030500F87952 /* MusicSoul.app */,
+				6CE5F78D29E5030500F87952 /* KpopSoul.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -113,6 +126,7 @@
 		6CE5F7A429E5034C00F87952 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				6C905D1C29F6A1FE003E71E9 /* Browse */,
 				6CE5F79B29E5030700F87952 /* LaunchScreen.storyboard */,
 			);
 			path = View;
@@ -211,7 +225,7 @@
 			);
 			name = Spotify;
 			productName = Spotify;
-			productReference = 6CE5F78D29E5030500F87952 /* MusicSoul.app */;
+			productReference = 6CE5F78D29E5030500F87952 /* KpopSoul.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -273,6 +287,7 @@
 				6CE5F7DF29E508C400F87952 /* SearchResultsViewController.swift in Sources */,
 				6CE5F7D529E5084700F87952 /* WelcomeViewController.swift in Sources */,
 				6CE5F7D929E5087400F87952 /* ProfileViewController.swift in Sources */,
+				6C905D2029F6A520003E71E9 /* FeaturedPlaylistCollectionViewCell.swift in Sources */,
 				6CE5F7CB29E5079800F87952 /* TabBarViewController.swift in Sources */,
 				6CE5F7E529E520BC00F87952 /* HapticsManager.swift in Sources */,
 				6C03C6BA29EBB69600C6F71C /* AuthResponse.swift in Sources */,
@@ -281,6 +296,7 @@
 				6CE5F7D329E5083900F87952 /* AuthViewController.swift in Sources */,
 				6CE5F79129E5030500F87952 /* AppDelegate.swift in Sources */,
 				6C4C098D29E54CAB0027B4E9 /* Extensions.swift in Sources */,
+				6C905D1E29F6A263003E71E9 /* NewReleaseCollectionViewCell.swift in Sources */,
 				6CE5F7CF29E507EC00F87952 /* LibraryViewController.swift in Sources */,
 				6CE5F7EB29E5231400F87952 /* Artist.swift in Sources */,
 				6CE5F7DD29E508A000F87952 /* PlaylistViewController.swift in Sources */,
@@ -441,7 +457,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = laura.com.Spotify;
-				PRODUCT_NAME = MusicSoul;
+				PRODUCT_NAME = KpopSoul;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -469,7 +485,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = laura.com.Spotify;
-				PRODUCT_NAME = MusicSoul;
+				PRODUCT_NAME = KpopSoul;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
