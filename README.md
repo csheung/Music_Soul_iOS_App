@@ -1,7 +1,23 @@
 Original App Design Project - README
 ===
 
-# Music Soul
+# Kpop Soul
+Kpop Soul is an iOS app developed using SwiftUI, which leverages the Spotify Web API to showcase K-pop (Korean) artists and their albums. The app provides an immersive experience for K-pop fans by offering a seamless and intuitive interface for browsing and discovering their favorite artists and albums.<br>
+
+Upon launching the app, users are presented with a login and signup page, where they can either sign in using their existing Spotify account or create a new one. This integration with Spotify ensures a personalized experience tailored to the user's music preferences.<br>
+
+Once signed in, the Home page displays a searchable table view of various K-pop artists. Each artist entry includes essential information such as their name and profile picture. By selecting an artist from the list, users are navigated to a dedicated artist page.<br>
+
+The artist page features a visually appealing collection view of the artist's albums, accompanied by the artist's icon and a brief introduction at the top of the view. Users can further explore individual albums by clicking on them, revealing additional information and enhancing their overall K-pop experience.<br>
+
+Kpop Soul aims to provide a comprehensive and engaging platform for K-pop enthusiasts, making it easy to explore and enjoy the vibrant world of Korean music through the power of the Spotify Web API. By integrating features like account authentication, artist search, and album exploration, Kpop Soul delivers a rich and interactive experience for its users.<br>
+
+## Video Walkthrough
+Here's a walkthrough of implemented user stories:
+<!-- ![](Kpop_Soul.gif) -->
+<img src="Kpop_Soul.gif" width="250" height="450"/>
+
+# Previous Design (Music Soul)
 
 ## Table of Contents
 1. [Overview](#Overview)
@@ -134,7 +150,7 @@ Artist: ParseObject {
     let artworkUrl100: URL
 }
 
-# For Collection View
+### For Collection View
 struct AlbumSearchResponse: Decodable {
     let results: [Album]
 }
