@@ -11,7 +11,9 @@
 		6C4C098D29E54CAB0027B4E9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4C098C29E54CAB0027B4E9 /* Extensions.swift */; };
 		6C905D1E29F6A263003E71E9 /* NewReleaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C905D1D29F6A263003E71E9 /* NewReleaseCollectionViewCell.swift */; };
 		6C905D2029F6A520003E71E9 /* FeaturedPlaylistCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C905D1F29F6A520003E71E9 /* FeaturedPlaylistCollectionViewCell.swift */; };
+		6C905D2229F6A7D0003E71E9 /* NewReleasesCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C905D2129F6A7D0003E71E9 /* NewReleasesCellViewModel.swift */; };
 		6CD8E12B29E55FC900A0A0E8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CD8E12A29E55FC900A0A0E8 /* Main.storyboard */; };
+		6CE0D24329F6AC0500F578EF /* FeaturedPlaylistCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE0D24229F6AC0500F578EF /* FeaturedPlaylistCellViewModel.swift */; };
 		6CE5F79129E5030500F87952 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE5F79029E5030500F87952 /* AppDelegate.swift */; };
 		6CE5F79329E5030500F87952 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE5F79229E5030500F87952 /* SceneDelegate.swift */; };
 		6CE5F79529E5030500F87952 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE5F79429E5030500F87952 /* HomeViewController.swift */; };
@@ -43,7 +45,9 @@
 		6C4C098C29E54CAB0027B4E9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		6C905D1D29F6A263003E71E9 /* NewReleaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReleaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		6C905D1F29F6A520003E71E9 /* FeaturedPlaylistCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedPlaylistCollectionViewCell.swift; sourceTree = "<group>"; };
+		6C905D2129F6A7D0003E71E9 /* NewReleasesCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReleasesCellViewModel.swift; sourceTree = "<group>"; };
 		6CD8E12A29E55FC900A0A0E8 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		6CE0D24229F6AC0500F578EF /* FeaturedPlaylistCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedPlaylistCellViewModel.swift; sourceTree = "<group>"; };
 		6CE5F78D29E5030500F87952 /* KpopSoul.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KpopSoul.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CE5F79029E5030500F87952 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6CE5F79229E5030500F87952 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -158,6 +162,8 @@
 		6CE5F7A729E5036200F87952 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				6C905D2129F6A7D0003E71E9 /* NewReleasesCellViewModel.swift */,
+				6CE0D24229F6AC0500F578EF /* FeaturedPlaylistCellViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -299,7 +305,9 @@
 				6C905D1E29F6A263003E71E9 /* NewReleaseCollectionViewCell.swift in Sources */,
 				6CE5F7CF29E507EC00F87952 /* LibraryViewController.swift in Sources */,
 				6CE5F7EB29E5231400F87952 /* Artist.swift in Sources */,
+				6CE0D24329F6AC0500F578EF /* FeaturedPlaylistCellViewModel.swift in Sources */,
 				6CE5F7DD29E508A000F87952 /* PlaylistViewController.swift in Sources */,
+				6C905D2229F6A7D0003E71E9 /* NewReleasesCellViewModel.swift in Sources */,
 				6CE5F79329E5030500F87952 /* SceneDelegate.swift in Sources */,
 				6CE5F7DB29E5088900F87952 /* PlayerViewController.swift in Sources */,
 				6CE5F7E329E508FB00F87952 /* APICaller.swift in Sources */,

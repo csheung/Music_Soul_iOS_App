@@ -24,6 +24,5 @@ struct Album: Codable {
     let release_date: String
     let total_tracks: Int
     let artists: [Artist]
-//    let genres:[String]
 }
 

@@ -8,5 +8,5 @@
 import UIKit
 
 class NewReleaseCollectionViewCell: UICollectionViewCell {
-    let identifier = "NewReleaseCollectionViewCell"
+    static let identifier = "NewReleaseCollectionViewCell"
 }

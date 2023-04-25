@@ -26,7 +26,7 @@ final class APICaller {
     // MARK: - Browse
 
     public func getNewReleases(completion: @escaping ((Result<NewReleasesResponse, Error>)) -> Void) {
-        createRequest(with: URL(string: Constants.baseAPIURL + "/browse/new-releases?country=KR"), type: .GET) { request in
+        createRequest(with: URL(string: Constants.baseAPIURL + "/browse/new-releases?country=KR&limit=20"), type: .GET) { request in
             let task = URLSession.shared.dataTask(with: request) { data, _, error in
                 guard let data = data, error == nil else {
                     completion(.failure(APIError.faileedToGetData))
@@ -51,7 +51,7 @@ final class APICaller {
 
     public func getFeaturedFlaylists(completion: @escaping ((Result<FeaturedPlaylistsResponse, Error>) -> Void)) {
         createRequest(
-            with: URL(string: Constants.baseAPIURL + "/browse/featured-playlists?country=KR"),
+            with: URL(string: Constants.baseAPIURL + "/browse/featured-playlists?country=KR&limit=20"),
             type: .GET
         ) { request in
             let task = URLSession.shared.dataTask(with: request) { data, _, error in
