@@ -14,16 +14,27 @@ class HomeViewController: UIViewController, UITableViewDataSource {
         }
     }
 
-   @IBOutlet weak var tableView: UITableView!
-    // issue: table view: found nil while implicitly unwrapping an Optional value
-    
+    private var tableView: UITableView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Home"
         view.backgroundColor = .systemBackground
+        
+        // Create a new UITableView
+        tableView = UITableView(frame: view.bounds, style: .plain)
+        
+        // Register the custom cell class
+        tableView.register(ArtistCell.self, forCellReuseIdentifier: "ArtistCell")
+        
+        // Set the table view's data source to this view controller
+        tableView.dataSource = self
+        
+        // Add the table view as a subview of the view controller's view
+        view.addSubview(tableView)
+        
+        // Fetch the K-pop artists
         if let accessToken = UserDefaults.standard.string(forKey: "access_token") {
-            
-            // use the access token to make API calls
             fetchKpopArtists(accessToken: accessToken)
         } else {
             // access token not found, sign in again
@@ -69,7 +80,7 @@ class HomeViewController: UIViewController, UITableViewDataSource {
         }
         
         task.resume()
-        tableView.dataSource=self
+        //tableView.dataSource=self
     }
     
     override func viewWillAppear(_ animated: Bool) {

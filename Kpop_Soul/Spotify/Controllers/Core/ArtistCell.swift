@@ -10,18 +10,44 @@ import Nuke
 
 class ArtistCell: UITableViewCell {
     
-    @IBOutlet weak var artistImageView: UIImageView!
+    let artistImageView = UIImageView()
+    let artistNameLabel = UILabel()
     
-    @IBOutlet weak var artistNameLabel: UILabel!
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        // Set up the artist image view
+        artistImageView.contentMode = .scaleAspectFit
+        artistImageView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(artistImageView)
+        
+        // Set up the artist name label
+        artistNameLabel.font = .systemFont(ofSize: 16, weight: .semibold)
+        artistNameLabel.numberOfLines = 0
+        artistNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(artistNameLabel)
+        
+        // Set up constraints
+        NSLayoutConstraint.activate([
+            artistImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            artistImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            artistImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            artistImageView.widthAnchor.constraint(equalTo: artistImageView.heightAnchor),
+            
+            artistNameLabel.leadingAnchor.constraint(equalTo: artistImageView.trailingAnchor, constant: 16),
+            artistNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            artistNameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+        ])
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        artistImageView.image = nil
+        artistNameLabel.text = nil
     }
     
     func configure(with artist: Artist) {
