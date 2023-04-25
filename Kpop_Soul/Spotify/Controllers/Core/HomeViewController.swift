@@ -7,303 +7,121 @@
 
 import UIKit
 
-enum BrowseSectionType {
-    case newReleases(viewModels: [NewReleasesCellViewModel]) // 1
-    case featuredPlaylists(viewModels: [NewReleasesCellViewModel]) // 2
-    
-    
-    var title: String {
-        switch self {
-        case .newReleases:
-            return "Latest KPOP Albums"
-        case .featuredPlaylists:
-            return "KPOP Featured Playlists"
-            
+class HomeViewController: UIViewController, UITableViewDataSource {
+    var artists = [Artist](){
+        didSet{
+            tableView.reloadData()
         }
     }
-}
-    
-class HomeViewController: UIViewController {
-    
-    private var collectionView: UICollectionView = UICollectionView(
-        frame: .zero,
-        collectionViewLayout: UICollectionViewCompositionalLayout { sectionIndex, _ -> NSCollectionLayoutSection? in
-            return HomeViewController.createSectionLayout(section: sectionIndex)
-        }
-    )
-    
-    private let spinner: UIActivityIndicatorView = {
-        let spinner = UIActivityIndicatorView()
-        spinner.tintColor = .label
-        spinner.hidesWhenStopped = true
-        return spinner
-    }()
-    
-    private var sections = [BrowseSectionType]()
-    
+
+   @IBOutlet weak var tableView: UITableView!
+    // issue: table view: found nil while implicitly unwrapping an Optional value
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        title = "Browse"
+        title = "Home"
         view.backgroundColor = .systemBackground
-        
-        configureCollectionView()
-        view.addSubview(spinner)
-        fetchData()
-        //addLongTapGesture()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        collectionView.frame = view.bounds
-    }
-    
-    private func configureCollectionView() {
-        view.addSubview(collectionView)
-        collectionView.register(UICollectionViewCell.self,
-                                forCellWithReuseIdentifier: "cell")
-        collectionView.register(NewReleaseCollectionViewCell.self,
-                                forCellWithReuseIdentifier: NewReleaseCollectionViewCell.identifier)
-        collectionView.register(FeaturedPlaylistCollectionViewCell.self,
-                                forCellWithReuseIdentifier: FeaturedPlaylistCollectionViewCell.identifier)
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.backgroundColor = .systemBackground
+        if let accessToken = UserDefaults.standard.string(forKey: "access_token") {
+            
+            // use the access token to make API calls
+            fetchKpopArtists(accessToken: accessToken)
+        } else {
+            // access token not found, sign in again
+            let window = UIWindow(frame: UIScreen.main.bounds)
+            window.rootViewController = UINavigationController(rootViewController: WelcomeViewController())
+        }
     }
     
     
     
-    // The real function for creating layout
-    private static func createSectionLayout(section: Int) -> NSCollectionLayoutSection {
-        switch section {
-        case 0:
-            // Item
-            let item = NSCollectionLayoutItem(
-                layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .fractionalHeight(1.0)
-                )
-            )
-            
-            item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
-            
-            // Vertical group inside a horizontal group
-            let verticalGroup = NSCollectionLayoutGroup.vertical(
-                layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .absolute(390)//390
-                ),
-                subitem: item,
-                count: 3
-            )
-            
-            let horizontalGroup = NSCollectionLayoutGroup.horizontal(
-                layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(0.9),
-                    heightDimension: .absolute(390)
-                ),
-                subitem: verticalGroup,
-                count: 1
-            )
-            
-            // Section
-            let section = NSCollectionLayoutSection(group: horizontalGroup) //horizontal group
-            section.orthogonalScrollingBehavior = .continuous
-            return section
+    func fetchKpopArtists(accessToken: String) {
+        let urlString = "https://api.spotify.com/v1/search?q=kpop&type=artist&market=US"
+        let url = URL(string: urlString)!
+        var request = URLRequest(url: url)
 
-        case 1:
-            // Item
-            let item = NSCollectionLayoutItem(
-                layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .absolute(200),
-                    heightDimension: .absolute(200)
-                )
-            )
-            
-            item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
-            
-            let verticalGroup = NSCollectionLayoutGroup.vertical(
-                layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .absolute(200),
-                    heightDimension: .absolute(400)
-                ),
-                subitem: item,
-                count: 2
-            )
-            
-            //scroll horizontally
-            let horizontalGroup = NSCollectionLayoutGroup.horizontal(
-                layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .absolute(200),
-                    heightDimension: .absolute(400)
-                ),
-                subitem: verticalGroup,
-                count: 1
-            )
-            
-            // Section
-            let section = NSCollectionLayoutSection(group: horizontalGroup)
-            section.orthogonalScrollingBehavior = .continuous
-            //section.boundarySupplementaryItems = supplementaryViews
-            return section
-            
-        default:
-            // Item
-            let item = NSCollectionLayoutItem(
-                layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .fractionalHeight(1.0)
-                )
-            )
-            
-            item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
-            
-            let group = NSCollectionLayoutGroup.vertical(
-                layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .absolute(390)
-                ),
-                subitem: item,
-                count: 1
-            )
-            let section = NSCollectionLayoutSection(group: group)
-            //  section.boundarySupplementaryItems = supplementaryViews
-            return section
-            
-        }
-    }
-    
-    
-    private func fetchData() {
-        let group = DispatchGroup()
-        group.enter()
-        group.enter()
-        print("Start fetching data")
         
-        var newReleases: NewReleasesResponse?
-        var featuredPlaylist: FeaturedPlaylistsResponse?
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         
-        
-        // New Releases
-        APICaller.shared.getNewReleases { result in
-            defer {
-                group.leave()
-            }
-            switch result {
-            case .success(let model):
-                newReleases = model
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-        
-        // Featured Playlists
-        APICaller.shared.getFeaturedFlaylists { result in
-            defer {
-                group.leave()
-            }
-            switch result {
-            case .success(let model):
-                featuredPlaylist = model
-            case .failure(let error):
-                print(error.localizedDescription)
-                
-            }
-        }
-        
-        group.notify(queue: .main) {
-            guard let newAlbums = newReleases?.albums.items,
-                  let playlists = featuredPlaylist?.playlists.items
-            else {
+        let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+            
+            if let error = error {
+                print("Error fetching K-pop artists: \(error.localizedDescription)")
                 return
-                //fatalError("Models are nil")
             }
-            print("Configuring viewModels")
-            self.configureModels(
-                newAlbums: newAlbums,
-                playlists: playlists
-            )
-        }
-    }
-    
-    
-    private func configureModels(
-        newAlbums: [Album],
-        playlists: [Playlist]
-        
-    ) {
-        
-        
-        //            self.newAlbums = newAlbums
-        //            self.playlists = playlists
-        //
-//        print(newAlbums.count)
-//        print(playlists.count)
-        sections.append(.newReleases(viewModels: newAlbums.compactMap({
-            return NewReleasesCellViewModel(
-                name: $0.name,
-                artworkURL: URL(string: $0.images.first?.url ?? ""),
-                numberOfTracks: $0.total_tracks,
-                artistName: $0.artists.first?.name ?? "-"
-            )
-        })))
-        
-        sections.append(.featuredPlaylists(viewModels: []))
-        collectionView.reloadData()
-    }
-}
-
-
-
-
-
-extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        let type = sections[section]
-        switch type {
-        case .newReleases(let viewModels):
-            return viewModels.count
-        case .featuredPlaylists(let viewModels):
-            return viewModels.count
-        }
-    }
-    
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return sections.count
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let type = sections[indexPath.section]
-        switch type {
-        case .newReleases(let viewModels):
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: NewReleaseCollectionViewCell.identifier,
-                for: indexPath
-            ) as? NewReleaseCollectionViewCell else {
-                return UICollectionViewCell()
-            }
-            let viewModel = viewModels[indexPath.row]
-            //cell.configure(with: viewModel)
-            cell.backgroundColor = .systemRed
-            return cell
-        case .featuredPlaylists(let viewModels):
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: FeaturedPlaylistCollectionViewCell.identifier,
-                for: indexPath
-            ) as? FeaturedPlaylistCollectionViewCell else {
-                return UICollectionViewCell()
-            }
-            //cell.configure(with: viewModels[indexPath.row])
-            cell.backgroundColor = .systemBlue
-            return cell
             
+            guard let data = data else {
+                print("No data returned from Spotify API")
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let response = try decoder.decode(SearchResponse.self, from: data)
+                let artists = response.artists.items
+                print("✅ \(artists)")
+                DispatchQueue.main.async {
+                    self?.artists = artists
+                    self?.tableView.reloadData()
+                }
+            } catch {
+                print("Error decoding Spotify API response: \(error.localizedDescription)")
+            }
+        }
+        
+        task.resume()
+        tableView.dataSource=self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        // TODO: Deselect any selected table view rows
+
+        // Get the index path for the current selected table view row (if exists)
+        if let indexPath = tableView.indexPathForSelectedRow {
+
+            // Deslect the row at the corresponding index path
+            tableView.deselectRow(at: indexPath, animated: true)
         }
     }
+
+    /*
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // TODO: Pt 1 - Pass the selected track to the detail view controller
+
+        // Get the cell that triggered the segue
+        if let cell = sender as? UITableViewCell,
+           // Get the index path of the cell from the table view
+           let indexPath = tableView.indexPath(for: cell),
+           // Get the detail view controller
+           let detailViewController = segue.destination as? DetailViewController {
+
+            // Use the index path to get the associated track
+            let artist = artists[indexPath.row]
+
+            // Set the track on the detail view controller
+            detailViewController.artist = artist
+        }
+    }
+    */
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return artists.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        // Get a cell with identifier, "TrackCell"
+        // the `dequeueReusableCell(withIdentifier:)` method just returns a generic UITableViewCell so it's necessary to cast it to our specific custom cell.
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ArtistCell", for: indexPath) as! ArtistCell
+
+        // Get the track that corresponds to the table view row
+        let artist = artists[indexPath.row]
+
+        // Configure the cell with it's associated track
+        cell.configure(with: artist)
+
+        // return the cell for display in the table view
+        return cell
+    }
 }
-
-
-
