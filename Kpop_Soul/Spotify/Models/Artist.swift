@@ -7,23 +7,10 @@
 
 import Foundation
 
-struct ImageObject:Decodable {
-    let url: URL
-    let width: Int
-    let height: Int
-}
-
-struct Artist: Decodable {
-    
+struct Artist: Codable {
     let id: String
-    let images: [ImageObject]
-    let name: String?
-}
-
-struct SearchResponse: Decodable {
-    let artists: Artists
-}
-
-struct Artists: Decodable {
-    let items: [Artist]
+    let name: String
+    let type: String
+    let images: [APIImage]?
+    let external_urls: [String: String]
 }
