@@ -9,7 +9,7 @@ import UIKit
 
 enum BrowseSectionType {
     case newReleases(viewModels: [NewReleasesCellViewModel]) // 1
-    case featuredPlaylists(viewModels: [NewReleasesCellViewModel]) // 2
+    case featuredPlaylists(viewModels: [FeaturedPlaylistCellViewModel]) // 2
     
     
     var title: String {
@@ -24,6 +24,10 @@ enum BrowseSectionType {
 }
     
 class HomeViewController: UIViewController {
+    
+    private var newAlbums: [Album] = []
+    private var playlists: [Playlist] = []
+ 
     
     private var collectionView: UICollectionView = UICollectionView(
         frame: .zero,
@@ -70,6 +74,168 @@ class HomeViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = .systemBackground
+    }
+    
+    
+    
+    
+    private func fetchData() {
+        let group = DispatchGroup()
+        group.enter()
+        group.enter()
+        print("Start fetching data")
+        
+        var newReleases: NewReleasesResponse?
+        var featuredPlaylist: FeaturedPlaylistsResponse?
+        
+        
+        // New Releases
+        APICaller.shared.getNewReleases { result in
+            defer {
+                group.leave()
+            }
+            switch result {
+            case .success(let model):
+                newReleases = model
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+        // Featured Playlists
+        APICaller.shared.getFeaturedFlaylists { result in
+            defer {
+                group.leave()
+            }
+            switch result {
+            case .success(let model):
+                featuredPlaylist = model
+            case .failure(let error):
+                print(error.localizedDescription)
+                
+            }
+        }
+        
+        group.notify(queue: .main) {
+            guard let newAlbums = newReleases?.albums.items,
+                  let playlists = featuredPlaylist?.playlists.items
+            else {
+                return
+                //fatalError("Models are nil")
+            }
+            print("Configuring viewModels")
+            self.configureModels(
+                newAlbums: newAlbums,
+                playlists: playlists
+            )
+        }
+    }
+    
+    
+    private func configureModels(
+        newAlbums: [Album],
+        playlists: [Playlist]
+        
+    ) {
+        
+        
+        self.newAlbums = newAlbums
+        self.playlists = playlists
+        //
+//        print(newAlbums.count)
+//        print(playlists.count)
+        sections.append(.newReleases(viewModels: newAlbums.compactMap({
+            return NewReleasesCellViewModel(
+                name: $0.name,
+                artworkURL: URL(string: $0.images.first?.url ?? ""),
+                numberOfTracks: $0.total_tracks,
+                artistName: $0.artists.first?.name ?? "-"
+            )
+        })))
+        
+        sections.append(.featuredPlaylists(viewModels: playlists.compactMap({
+            return FeaturedPlaylistCellViewModel(
+                name: $0.name,
+                artworkURL: URL(string: $0.images.first?.url ?? ""),
+                creatorName: $0.owner.display_name
+            )
+        })))
+        collectionView.reloadData()
+    }
+}
+
+
+
+
+
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        let type = sections[section]
+        switch type {
+        case .newReleases(let viewModels):
+            return viewModels.count
+        case .featuredPlaylists(let viewModels):
+            return viewModels.count
+        }
+    }
+    
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return sections.count
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let type = sections[indexPath.section]
+        switch type {
+        case .newReleases(let viewModels):
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: NewReleaseCollectionViewCell.identifier,
+                for: indexPath
+            ) as? NewReleaseCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            let viewModel = viewModels[indexPath.row]
+            cell.configure(with: viewModel)
+            //cell.backgroundColor = .systemRed
+            return cell
+        case .featuredPlaylists(let viewModels):
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: FeaturedPlaylistCollectionViewCell.identifier,
+                for: indexPath
+            ) as? FeaturedPlaylistCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            cell.configure(with: viewModels[indexPath.row])
+            //cell.backgroundColor = .systemBlue
+            return cell
+            
+        }
+    }
+    
+    
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        //HapticsManager.shared.vibrateForSelection()
+        let section = sections[indexPath.section]
+        switch section {
+        case .featuredPlaylists:
+            
+            let playlist = playlists[indexPath.row]
+            let vc = PlaylistViewController(playlist: playlist)
+            vc.title = playlist.name
+            vc.navigationItem.largeTitleDisplayMode = .never
+            navigationController?.pushViewController(vc, animated: true)
+        case .newReleases:
+            let album = newAlbums[indexPath.row]
+            let vc = AlbumViewController(album: album)
+            vc.title = album.name
+            vc.navigationItem.largeTitleDisplayMode = .never
+            navigationController?.pushViewController(vc, animated: true)
+            
+        }
     }
     
     
@@ -170,136 +336,6 @@ class HomeViewController: UIViewController {
             let section = NSCollectionLayoutSection(group: group)
             //  section.boundarySupplementaryItems = supplementaryViews
             return section
-            
-        }
-    }
-    
-    
-    private func fetchData() {
-        let group = DispatchGroup()
-        group.enter()
-        group.enter()
-        print("Start fetching data")
-        
-        var newReleases: NewReleasesResponse?
-        var featuredPlaylist: FeaturedPlaylistsResponse?
-        
-        
-        // New Releases
-        APICaller.shared.getNewReleases { result in
-            defer {
-                group.leave()
-            }
-            switch result {
-            case .success(let model):
-                newReleases = model
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-        
-        // Featured Playlists
-        APICaller.shared.getFeaturedFlaylists { result in
-            defer {
-                group.leave()
-            }
-            switch result {
-            case .success(let model):
-                featuredPlaylist = model
-            case .failure(let error):
-                print(error.localizedDescription)
-                
-            }
-        }
-        
-        group.notify(queue: .main) {
-            guard let newAlbums = newReleases?.albums.items,
-                  let playlists = featuredPlaylist?.playlists.items
-            else {
-                return
-                //fatalError("Models are nil")
-            }
-            print("Configuring viewModels")
-            self.configureModels(
-                newAlbums: newAlbums,
-                playlists: playlists
-            )
-        }
-    }
-    
-    
-    private func configureModels(
-        newAlbums: [Album],
-        playlists: [Playlist]
-        
-    ) {
-        
-        
-        //            self.newAlbums = newAlbums
-        //            self.playlists = playlists
-        //
-//        print(newAlbums.count)
-//        print(playlists.count)
-        sections.append(.newReleases(viewModels: newAlbums.compactMap({
-            return NewReleasesCellViewModel(
-                name: $0.name,
-                artworkURL: URL(string: $0.images.first?.url ?? ""),
-                numberOfTracks: $0.total_tracks,
-                artistName: $0.artists.first?.name ?? "-"
-            )
-        })))
-        
-        sections.append(.featuredPlaylists(viewModels: []))
-        collectionView.reloadData()
-    }
-}
-
-
-
-
-
-extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        let type = sections[section]
-        switch type {
-        case .newReleases(let viewModels):
-            return viewModels.count
-        case .featuredPlaylists(let viewModels):
-            return viewModels.count
-        }
-    }
-    
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return sections.count
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let type = sections[indexPath.section]
-        switch type {
-        case .newReleases(let viewModels):
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: NewReleaseCollectionViewCell.identifier,
-                for: indexPath
-            ) as? NewReleaseCollectionViewCell else {
-                return UICollectionViewCell()
-            }
-            let viewModel = viewModels[indexPath.row]
-            //cell.configure(with: viewModel)
-            cell.backgroundColor = .systemRed
-            return cell
-        case .featuredPlaylists(let viewModels):
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: FeaturedPlaylistCollectionViewCell.identifier,
-                for: indexPath
-            ) as? FeaturedPlaylistCollectionViewCell else {
-                return UICollectionViewCell()
-            }
-            //cell.configure(with: viewModels[indexPath.row])
-            cell.backgroundColor = .systemBlue
-            return cell
             
         }
     }

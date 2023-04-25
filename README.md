@@ -16,7 +16,7 @@ Kpop Soul aims to provide a comprehensive and engaging platform for K-pop enthus
 Here's a walkthrough of implemented user stories:
 <!-- ![](Kpop_Soul.gif) -->
 <img src="Kpop_Soul.gif" width="250" height="450"/>
-
+<img src="browse.gif" width="250" height="450"/>
 # Previous Design (Music Soul)
 
 ## Table of Contents
